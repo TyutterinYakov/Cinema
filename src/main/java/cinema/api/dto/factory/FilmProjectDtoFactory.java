@@ -13,19 +13,22 @@ import cinema.store.entity.FilmProject;
 public class FilmProjectDtoFactory {
 	
 	private final FilmDtoFactory filmDtoFactory;
+	private final SeanceDtoFactory seanceDtoFactory;
 	
 	@Autowired
-	public FilmProjectDtoFactory(FilmDtoFactory filmDtoFactory) {
+	public FilmProjectDtoFactory(FilmDtoFactory filmDtoFactory, SeanceDtoFactory seanceDtoFactory) {
 		super();
 		this.filmDtoFactory = filmDtoFactory;
+		this.seanceDtoFactory = seanceDtoFactory;
 	}
-
 
 	public FilmProjectDto createFilmProjectDto(FilmProject project) {
 		return new FilmProjectDto(
 				project.getId(),
 				filmDtoFactory
-					.createFilmDto(project.getFilm())
+					.createFilmDto(project.getFilm()),
+				seanceDtoFactory
+					.createSeanceDto(project.getSeance())
 				);
 	}
 	

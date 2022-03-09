@@ -16,6 +16,17 @@ public class FilmCategory {
 	private FilmEntity film;
 	@ManyToOne
 	private CategoryEntity category;
+	
+	
+	
+	public FilmCategory() {
+		super();
+	}
+	public FilmCategory(FilmEntity film, CategoryEntity category) {
+		super();
+		this.film = film;
+		this.category = category;
+	}
 	public Long getId() {
 		return id;
 	}

@@ -2,8 +2,6 @@ package cinema.api.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import cinema.api.dto.CinemaDto;
 import cinema.api.model.CinemaModel;
 

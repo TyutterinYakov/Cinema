@@ -86,7 +86,7 @@ public class HallServiceImpl implements HallService{
 	}
 	
 	private boolean findHallByCinemaAndNameIsPresentThrow(CinemaEntity cinema, String name) {
-		hallDao.findByNameIgnoreCaseAndCinema(name, cinema).ifPresent((h)->{
+		hallDao.findByCinemaAndNameIgnoreCase(cinema, name).ifPresent((h)->{
 			throw new BadRequestException(
 					String.format("Холл с именем \"%s\" уже есть в этом кинотеатре")); 
 		});

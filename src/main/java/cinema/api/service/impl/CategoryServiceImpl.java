@@ -81,7 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	private boolean findCategoryByCinemaAndNameIsPresentThrow(CinemaEntity cinema, String name) {
-		categoryDao.findByCinemaAndNameIgnoreCase(name).ifPresent((c)->{
+		categoryDao.findByCinemaAndNameIgnoreCase(cinema, name).ifPresent((c)->{
 			throw new BadRequestException(String.format("Категория с именем \"%s\"  уже существует"));
 		});
 		return false;

@@ -29,11 +29,21 @@ public class FilmEntity {
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
 	private List<FilmCategory> filmCategory = new ArrayList<>();
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
-	private List<FilmHall> filmHall = new ArrayList<>();
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
 	private List<FilmProject> filmProjects = new ArrayList<>();
 	
 	
+	
+	public FilmEntity() {
+		super();
+	}
+	public FilmEntity(String title, String descrition, String image, String director, double duration) {
+		super();
+		this.title = title;
+		this.descrition = descrition;
+		this.image = image;
+		this.director = director;
+		this.duration = duration;
+	}
 	public Long getFilmId() {
 		return filmId;
 	}
@@ -69,12 +79,6 @@ public class FilmEntity {
 	}
 	public void setDuration(double duration) {
 		this.duration = duration;
-	}
-	public List<FilmHall> getFilmHall() {
-		return filmHall;
-	}
-	public void setFilmHall(List<FilmHall> filmHall) {
-		this.filmHall = filmHall;
 	}
 	public List<FilmCategory> getFilmCategory() {
 		return filmCategory;

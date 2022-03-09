@@ -14,6 +14,6 @@ import cinema.store.entity.CinemaEntity;
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
 
 
-	Optional<CategoryEntity> findByCinemaAndNameIgnoreCase(String name);
+	Optional<CategoryEntity> findByCinemaAndNameIgnoreCase(CinemaEntity cinema, String name);
 
 }

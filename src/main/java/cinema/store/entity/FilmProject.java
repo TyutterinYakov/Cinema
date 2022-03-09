@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class FilmProject {
@@ -22,8 +23,8 @@ public class FilmProject {
 	private HallEntity hall;
 	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
 	private FilmEntity film;
-	@OneToMany(mappedBy="filmProject", cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
-	private List<SeanceEntity> seances = new ArrayList<>();
+	@OneToOne(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
+	private SeanceEntity seance;
 	
 	public Long getId() {
 		return id;
@@ -43,11 +44,11 @@ public class FilmProject {
 	public void setFilm(FilmEntity film) {
 		this.film = film;
 	}
-	public List<SeanceEntity> getSeances() {
-		return seances;
+	public SeanceEntity getSeance() {
+		return seance;
 	}
-	public void setSeances(List<SeanceEntity> seances) {
-		this.seances = seances;
+	public void setSeance(SeanceEntity seance) {
+		this.seance = seance;
 	}
 	
 	

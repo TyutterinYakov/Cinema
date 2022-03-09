@@ -11,6 +11,6 @@ import cinema.store.entity.HallEntity;
 @Repository
 public interface HallRepository extends JpaRepository<HallEntity, Long>{
 
-	Optional<HallEntity> findByNameIgnoreCaseAndCinema(String name, CinemaEntity cinema);
+	Optional<HallEntity> findByCinemaAndNameIgnoreCase(CinemaEntity cinema, String name);
 
 }

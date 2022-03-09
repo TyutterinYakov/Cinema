@@ -27,8 +27,6 @@ public class HallEntity {
 	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, mappedBy="hall")
 	private List<PlaceEntity> places = new ArrayList<>();
 	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, mappedBy="hall")
-	private List<FilmHall> filmHall = new ArrayList<>();
-	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, mappedBy="hall")
 	private List<FilmProject> filmProjects = new ArrayList<>();
 	
 	
@@ -70,12 +68,6 @@ public class HallEntity {
 	}
 	public void setPlaces(List<PlaceEntity> places) {
 		this.places = places;
-	}
-	public List<FilmHall> getFilmHall() {
-		return filmHall;
-	}
-	public void setFilmHall(List<FilmHall> filmHall) {
-		this.filmHall = filmHall;
 	}
 	public List<FilmProject> getFilmProjects() {
 		return filmProjects;

@@ -1,5 +1,7 @@
 package cinema.api.dto;
 
+import java.util.List;
+
 public class FilmDto {
 
 	private Long filmId;
@@ -8,11 +10,14 @@ public class FilmDto {
 	private String image;
 	private double duration;
 	private String director;
+	private List<CategoryDto> listCategory;
 	
 	public FilmDto() {
 		super();
 	}
-	public FilmDto(Long filmId, String title, String description, String image, double duration, String director) {
+	
+	public FilmDto(Long filmId, String title, String description, String image, double duration, String director,
+			List<CategoryDto> listCategory) {
 		super();
 		this.filmId = filmId;
 		this.title = title;
@@ -20,7 +25,9 @@ public class FilmDto {
 		this.image = image;
 		this.duration = duration;
 		this.director = director;
+		this.listCategory = listCategory;
 	}
+
 	public Long getFilmId() {
 		return filmId;
 	}
@@ -57,6 +64,13 @@ public class FilmDto {
 	public void setDirector(String director) {
 		this.director = director;
 	}
+	public List<CategoryDto> getListCategory() {
+		return listCategory;
+	}
+	public void setListCategory(List<CategoryDto> listCategory) {
+		this.listCategory = listCategory;
+	}
+	
 	
 	
 	
