@@ -12,33 +12,28 @@ import cinema.store.entity.HallEntity;
 @Component
 public class HallDtoFactory {
 
-	private final FilmProjectDtoFactory filmProjectDtoFactory;
-	
+	private final SeanceDtoFactory seanceDtoFactory;
 	
 	@Autowired
-	public HallDtoFactory(FilmProjectDtoFactory filmProjectDtoFactory) {
+	public HallDtoFactory(SeanceDtoFactory seanceDtoFactory) {
 		super();
-		this.filmProjectDtoFactory = filmProjectDtoFactory;
+		this.seanceDtoFactory = seanceDtoFactory;
 	}
-
-
 
 	public HallDto createHallDto(HallEntity hall) {
 		return new HallDto(
 				hall.getHallId(),
 				hall.getName(),
-				filmProjectDtoFactory
-					.createListFilmProjectDto(
-							hall.getFilmProjects())
+				seanceDtoFactory
+					.createListSeanceDto(hall.getSeances())
 				);
 	}
 	
 	public List<HallDto> creatListHallDto(List<HallEntity> halls){
-		return halls.stream().map((h)->{
-			return new HallDto(
-					h.getHallId(), 
-					h.getName());
-			}).collect(Collectors.toList());
+		return halls
+				.stream()
+				.map(this::createHallDto)
+				.collect(Collectors.toList());
 	}
 
 	

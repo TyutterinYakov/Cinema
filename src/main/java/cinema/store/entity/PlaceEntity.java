@@ -1,5 +1,6 @@
 package cinema.store.entity;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +21,6 @@ public class PlaceEntity {
 	private HallEntity hall;
 	private int number;
 	
-	
 	public Long getPlaceId() {
 		return placeId;
 	}
@@ -39,6 +39,8 @@ public class PlaceEntity {
 	public void setNumber(int number) {
 		this.number = number;
 	}
+	
+	
 	
 	
 	

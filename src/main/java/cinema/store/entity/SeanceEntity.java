@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +20,23 @@ public class SeanceEntity {
 	private Long seanceId;
 	private LocalDateTime startedAt;
 	private LocalDateTime stopedAt;
-	@OneToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
-	private FilmProject filmProject;
+	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
+	private HallEntity hall;
+	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
+	private FilmEntity film;
+	private Double price;
+	
+	public SeanceEntity() {
+		super();
+	}
+	public SeanceEntity(LocalDateTime startedAt, LocalDateTime stopedAt, HallEntity hall, FilmEntity film, Double price) {
+		super();
+		this.startedAt = startedAt;
+		this.stopedAt = stopedAt;
+		this.hall = hall;
+		this.film = film;
+		this.price = price;
+	}
 	public Long getSeanceId() {
 		return seanceId;
 	}
@@ -41,11 +55,23 @@ public class SeanceEntity {
 	public void setStopedAt(LocalDateTime stopedAt) {
 		this.stopedAt = stopedAt;
 	}
-	public FilmProject getFilmProject() {
-		return filmProject;
+	public HallEntity getHall() {
+		return hall;
 	}
-	public void setFilmProject(FilmProject filmProject) {
-		this.filmProject = filmProject;
+	public void setHall(HallEntity hall) {
+		this.hall = hall;
+	}
+	public FilmEntity getFilm() {
+		return film;
+	}
+	public void setFilm(FilmEntity film) {
+		this.film = film;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 	
 	

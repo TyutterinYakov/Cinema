@@ -29,7 +29,7 @@ public class FilmEntity {
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
 	private List<FilmCategory> filmCategory = new ArrayList<>();
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
-	private List<FilmProject> filmProjects = new ArrayList<>();
+	private List<SeanceEntity> seances = new ArrayList<>();
 	
 	
 	
@@ -86,11 +86,11 @@ public class FilmEntity {
 	public void setFilmCategory(List<FilmCategory> filmCategory) {
 		this.filmCategory = filmCategory;
 	}
-	public List<FilmProject> getFilmProjects() {
-		return filmProjects;
+	public List<SeanceEntity> getSeances() {
+		return seances;
 	}
-	public void setFilmProjects(List<FilmProject> filmProjects) {
-		this.filmProjects = filmProjects;
+	public void setSeances(List<SeanceEntity> seances) {
+		this.seances = seances;
 	}
 	
 	

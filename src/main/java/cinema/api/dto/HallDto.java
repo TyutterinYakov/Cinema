@@ -2,34 +2,24 @@ package cinema.api.dto;
 
 import java.util.List;
 
-
-import cinema.store.entity.CinemaEntity;
-
 public class HallDto {
 
 	
 	private Long hallId;
 	private String name;
-	private List<FilmProjectDto> filmProjectDto;
-	
-	
+	private List<SeanceDto> seances;
 	
 	public HallDto() {
 		super();
 	}
-	public HallDto(Long hallId, String name, List<FilmProjectDto> filmProjectDto) {
+	
+	public HallDto(Long hallId, String name, List<SeanceDto> seances) {
 		super();
 		this.hallId = hallId;
 		this.name = name;
-		this.filmProjectDto = filmProjectDto;
+		this.seances = seances;
 	}
-	
-	
-	public HallDto(Long hallId, String name) {
-		super();
-		this.hallId = hallId;
-		this.name = name;
-	}
+
 	public Long getHallId() {
 		return hallId;
 	}
@@ -42,12 +32,15 @@ public class HallDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<FilmProjectDto> getFilmProjectDto() {
-		return filmProjectDto;
+
+	public List<SeanceDto> getSeances() {
+		return seances;
 	}
-	public void setFilmProjectDto(List<FilmProjectDto> filmProjectDto) {
-		this.filmProjectDto = filmProjectDto;
+
+	public void setSeances(List<SeanceDto> seances) {
+		this.seances = seances;
 	}
+	
 	
 	
 	

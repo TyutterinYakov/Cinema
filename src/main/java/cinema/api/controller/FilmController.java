@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cinema.api.dto.FilmDto;
@@ -46,7 +47,7 @@ public class FilmController {
 	
 	@PostMapping(ADD_FILM_IN_THE_CATEGORIES)
 	public ResponseEntity<FilmDto> addFilmInTheCategory(
-			@Valid FilmModel model, BindingResult result){
+			@Valid @RequestBody FilmModel model, BindingResult result){
 		checkError(result);
 		return new ResponseEntity<>(
 				filmService.addFilmInTheCategories(model), 
@@ -55,7 +56,7 @@ public class FilmController {
 	
 	@PutMapping(UPDATE_FILM)
 	public ResponseEntity<FilmDto> updateFilm(
-			@PathVariable("filmId") Long filmId, @Valid FilmModel model, BindingResult result){
+			@PathVariable("filmId") Long filmId, @Valid @RequestBody FilmModel model, BindingResult result){
 		checkError(result);
 		return new ResponseEntity<>(filmService.updateFilm(model, filmId) ,HttpStatus.ACCEPTED);
 	}

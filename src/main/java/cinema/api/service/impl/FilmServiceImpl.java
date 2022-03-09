@@ -1,5 +1,6 @@
 package cinema.api.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import cinema.api.dto.FilmDto;
 import cinema.api.dto.factory.FilmDtoFactory;
+import cinema.api.exception.BadRequestException;
 import cinema.api.exception.NotFoundException;
 import cinema.api.model.FilmModel;
 import cinema.api.service.FilmService;
@@ -58,8 +60,10 @@ public class FilmServiceImpl implements FilmService {
 										model.getImage(), 
 										model.getDirector(), 
 										model.getDuration()));
-		saveCategory(model, film);
-		return filmDtoFactory.createFilmDto(film);
+		if(saveCategory(model, film)) {
+			return filmDtoFactory.createFilmDto(film);
+		}
+			throw new BadRequestException();
 	}
 
 	@Override
@@ -70,8 +74,10 @@ public class FilmServiceImpl implements FilmService {
 		film.setDescrition(model.getDescrition());
 		film.setDirector(model.getDirector());
 		film.setDuration(model.getDuration());
-		saveCategory(model, film);
-		return filmDtoFactory.createFilmDto(film);
+		if(saveCategory(model, film)) {
+			return filmDtoFactory.createFilmDto(film);
+		}
+			throw new BadRequestException();
 	}
 
 	@Override
@@ -95,12 +101,13 @@ public class FilmServiceImpl implements FilmService {
 						String.format("Фильм с идентификатором \"%s\" не найден", filmId)));
 	}
 	
-	private void saveCategory(FilmModel model, FilmEntity film) {
-		model.getCategories().stream().forEach((c)->{
+	private boolean saveCategory(FilmModel model, FilmEntity film) {
+		Arrays.stream(model.getCategories()).forEach((c)->{
 			CategoryEntity category = findCategoryById(c);
 			filmCategoryDao.save(new FilmCategory(film, category));
 			}
 		);
+		return true;
 	}
 	
 	

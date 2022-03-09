@@ -3,6 +3,7 @@ package cinema.api.model;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class FilmModel {
@@ -13,10 +14,10 @@ public class FilmModel {
 	private String image;
 	@Size(min = 5, max = 200)
 	private String director;
-	@NotEmpty
+	@NotNull
 	private double duration;
-	@NotEmpty
-	private List<Long> categories;
+	@NotNull
+	private Long[] categories;
 	
 	public String getTitle() {
 		return title;
@@ -48,10 +49,10 @@ public class FilmModel {
 	public void setDuration(double duration) {
 		this.duration = duration;
 	}
-	public List<Long> getCategories() {
+	public Long[] getCategories() {
 		return categories;
 	}
-	public void setCategories(List<Long> categories) {
+	public void setCategories(Long[] categories) {
 		this.categories = categories;
 	}
 	

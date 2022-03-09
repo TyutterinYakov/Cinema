@@ -1,8 +1,5 @@
 package cinema.store.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,21 +7,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
-public class FilmProject {
-
+public class SeancePlace {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
-	private HallEntity hall;
-	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
-	private FilmEntity film;
-	@OneToOne(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
 	private SeanceEntity seance;
+	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
+	private PlaceEntity place;
+	private boolean reserved = false;
+	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
+	private ClientEntity client;
 	
 	public Long getId() {
 		return id;
@@ -32,23 +27,29 @@ public class FilmProject {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public HallEntity getHall() {
-		return hall;
-	}
-	public void setHall(HallEntity hall) {
-		this.hall = hall;
-	}
-	public FilmEntity getFilm() {
-		return film;
-	}
-	public void setFilm(FilmEntity film) {
-		this.film = film;
-	}
 	public SeanceEntity getSeance() {
 		return seance;
 	}
 	public void setSeance(SeanceEntity seance) {
 		this.seance = seance;
+	}
+	public PlaceEntity getPlace() {
+		return place;
+	}
+	public void setPlace(PlaceEntity place) {
+		this.place = place;
+	}
+	public boolean isReserved() {
+		return reserved;
+	}
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
+	}
+	public ClientEntity getClient() {
+		return client;
+	}
+	public void setClient(ClientEntity client) {
+		this.client = client;
 	}
 	
 	
