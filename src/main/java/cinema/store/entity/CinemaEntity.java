@@ -41,8 +41,6 @@ public class CinemaEntity {
 	public CinemaEntity() {
 		super();
 	}
-	
-	
 	public CinemaEntity(String name, String description, CityEntity city, String street, String structure,
 			String frame) {
 		super();
@@ -53,8 +51,6 @@ public class CinemaEntity {
 		this.structure = structure;
 		this.frame = frame;
 	}
-
-
 	public Long getCinemaId() {
 		return cinemaId;
 	}

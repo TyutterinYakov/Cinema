@@ -26,6 +26,14 @@ public class CategoryEntity {
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="category")
 	private List<FilmCategory> filmCategory = new ArrayList<>();
 	
+	public CategoryEntity() {
+		super();
+	}
+	public CategoryEntity(String name, CinemaEntity cinema) {
+		super();
+		this.name = name;
+		this.cinema = cinema;
+	}
 	public Long getCategoryId() {
 		return categoryId;
 	}

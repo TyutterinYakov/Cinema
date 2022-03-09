@@ -28,8 +28,19 @@ public class HallEntity {
 	private List<PlaceEntity> places = new ArrayList<>();
 	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, mappedBy="hall")
 	private List<FilmHall> filmHall = new ArrayList<>();
+	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, mappedBy="hall")
+	private List<FilmProject> filmProjects = new ArrayList<>();
 	
 	
+	public HallEntity() {
+		super();
+	}
+	public HallEntity(String name, int countPlace, CinemaEntity cinema) {
+		super();
+		this.name = name;
+		this.countPlace = countPlace;
+		this.cinema = cinema;
+	}
 	public Long getHallId() {
 		return hallId;
 	}
@@ -65,6 +76,12 @@ public class HallEntity {
 	}
 	public void setFilmHall(List<FilmHall> filmHall) {
 		this.filmHall = filmHall;
+	}
+	public List<FilmProject> getFilmProjects() {
+		return filmProjects;
+	}
+	public void setFilmProjects(List<FilmProject> filmProjects) {
+		this.filmProjects = filmProjects;
 	}
 	
 	

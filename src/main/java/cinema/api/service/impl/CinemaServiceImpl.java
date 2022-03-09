@@ -44,7 +44,7 @@ public class CinemaServiceImpl implements CinemaService{
 	public CinemaDto addCinema(CinemaModel model, Long cityId) {
 		return cinemaDtoFactory
 				.createCinemaDto(
-						cinemaDao.save(
+						cinemaDao.saveAndFlush(
 								new CinemaEntity(
 										model.getName(), 
 										model.getDescription(), 
@@ -81,7 +81,6 @@ public class CinemaServiceImpl implements CinemaService{
 	}
 	
 	private CinemaEntity findCinemaById(Long cinemaId) {
-		
 		return cinemaDao.findById(cinemaId).orElseThrow(()->
 				new NotFoundException(
 						String.format(

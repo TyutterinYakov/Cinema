@@ -1,6 +1,5 @@
 package cinema.store.entity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,12 +25,13 @@ public class FilmEntity {
 	private String descrition;
 	private String image;
 	private String director;
-	private LocalDateTime realease;
 	private double duration;
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
 	private List<FilmCategory> filmCategory = new ArrayList<>();
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
 	private List<FilmHall> filmHall = new ArrayList<>();
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE, mappedBy="film")
+	private List<FilmProject> filmProjects = new ArrayList<>();
 	
 	
 	public Long getFilmId() {
@@ -65,12 +64,6 @@ public class FilmEntity {
 	public void setDirector(String director) {
 		this.director = director;
 	}
-	public LocalDateTime getRealease() {
-		return realease;
-	}
-	public void setRealease(LocalDateTime realease) {
-		this.realease = realease;
-	}
 	public double getDuration() {
 		return duration;
 	}
@@ -89,6 +82,14 @@ public class FilmEntity {
 	public void setFilmCategory(List<FilmCategory> filmCategory) {
 		this.filmCategory = filmCategory;
 	}
+	public List<FilmProject> getFilmProjects() {
+		return filmProjects;
+	}
+	public void setFilmProjects(List<FilmProject> filmProjects) {
+		this.filmProjects = filmProjects;
+	}
+	
+	
 	
 	
 	
