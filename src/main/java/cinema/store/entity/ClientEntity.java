@@ -26,6 +26,12 @@ public class ClientEntity {
 	@OneToMany(cascade=CascadeType.REFRESH, fetch=FetchType.LAZY, mappedBy="client")
 	private List<SeancePlace> tickets = new ArrayList<>();
 	
+	
+	public ClientEntity(String numClient, List<SeancePlace> tickets) {
+		super();
+		this.numClient = numClient;
+		this.tickets = tickets;
+	}
 	public Long getClientId() {
 		return clientId;
 	}

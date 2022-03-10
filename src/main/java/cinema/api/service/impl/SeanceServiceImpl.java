@@ -1,10 +1,10 @@
 package cinema.api.service.impl;
 
-import javax.validation.Valid;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import cinema.api.dto.SeanceDto;
 import cinema.api.dto.factory.SeanceDtoFactory;
@@ -14,6 +14,7 @@ import cinema.api.service.SeanceService;
 import cinema.store.entity.FilmEntity;
 import cinema.store.entity.HallEntity;
 import cinema.store.entity.SeanceEntity;
+import cinema.store.entity.SeancePlace;
 import cinema.store.repository.FilmRepository;
 import cinema.store.repository.HallRepository;
 import cinema.store.repository.SeanceRepository;
@@ -36,12 +37,11 @@ public class SeanceServiceImpl implements SeanceService {
 	}
 
 	@Override
+	@Transactional
 	public SeanceDto createSeanceInTheHall(SeanceModel model, Long hallId) { //TODO проверка по времени проведения
 		FilmEntity film = findFilmById(model.getFilmId());
 		HallEntity hall = findHallById(hallId);
-		return seanceDtoFactory
-				.createSeanceDto(
-						seanceDao.saveAndFlush(
+		SeanceEntity seance = seanceDao.saveAndFlush(
 							new SeanceEntity(
 									model.getStartedAt(), 
 									model.getStartedAt()
@@ -49,7 +49,11 @@ public class SeanceServiceImpl implements SeanceService {
 												film.getDuration()*60)),  
 									hall, 
 									film,
-									model.getPrice())));
+									model.getPrice()));
+		seance.setSeancePlaces(hall.getPlaces().stream().map((p)->{
+									return new SeancePlace(seance, p);
+								}).collect(Collectors.toList()));
+		return seanceDtoFactory.createSeanceDto(seance);
 	}
 
 	@Override

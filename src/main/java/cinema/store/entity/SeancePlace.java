@@ -21,6 +21,14 @@ public class SeancePlace {
 	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
 	private ClientEntity client;
 	
+	public SeancePlace() {
+		super();
+	}
+	public SeancePlace(SeanceEntity seance, PlaceEntity place) {
+		super();
+		this.seance = seance;
+		this.place = place;
+	}
 	public Long getId() {
 		return id;
 	}

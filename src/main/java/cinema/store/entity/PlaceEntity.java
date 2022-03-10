@@ -21,6 +21,16 @@ public class PlaceEntity {
 	private HallEntity hall;
 	private int number;
 	
+	
+	
+	public PlaceEntity() {
+		super();
+	}
+	public PlaceEntity(HallEntity hall, int number) {
+		super();
+		this.hall = hall;
+		this.number = number;
+	}
 	public Long getPlaceId() {
 		return placeId;
 	}

@@ -1,5 +1,6 @@
 package cinema.api.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,6 +16,7 @@ import cinema.api.model.HallModel;
 import cinema.api.service.HallService;
 import cinema.store.entity.CinemaEntity;
 import cinema.store.entity.HallEntity;
+import cinema.store.entity.PlaceEntity;
 import cinema.store.repository.CinemaRepository;
 import cinema.store.repository.HallRepository;
 
@@ -40,16 +42,17 @@ public class HallServiceImpl implements HallService{
 	}
 
 	@Override
-	public HallDto createNewHall(Long cinemaId, HallModel hall) {
+	@Transactional
+	public HallDto createNewHall(Long cinemaId, HallModel model) {
 		CinemaEntity cinema = findCinemaById(cinemaId);
-		findHallByCinemaAndNameIsPresentThrow(cinema, hall.getName());
-		return hallDtoFactory.createHallDto(
-				hallDao.saveAndFlush(
-						new HallEntity(
-								hall.getName(), 
-								hall.getCountPlace(), 
-								cinema)));
-		
+		findHallByCinemaAndNameIsPresentThrow(cinema, model.getName());
+		HallEntity hall = hallDao.saveAndFlush(
+				new HallEntity(
+						model.getName(), 
+						model.getCountPlace(), 
+						cinema));
+		hall.setPlaces(generatePlaceByHall(hall));
+		return hallDtoFactory.createHallDto(hall);
 	}
 
 	@Override
@@ -58,13 +61,16 @@ public class HallServiceImpl implements HallService{
 		HallEntity hall = hallDao.findById(hallId).orElseThrow(()->
 				new NotFoundException(
 						String.format("Холл с идентификатором \"%s\" не найден", hallId)));
-		hall.setCountPlace(model.getCountPlace());
+		if(hall.getCountPlace()!=model.getCountPlace()) {
+			hall.setCountPlace(model.getCountPlace());
+			hall.setPlaces(generatePlaceByHall(hall));
+		}
 		if(!model.getName().equalsIgnoreCase(hall.getName())) {
 			if(!findHallByCinemaAndNameIsPresentThrow(hall.getCinema(), model.getName())) {
 				hall.setName(model.getName());
 			}
 		}
-		return null;
+		return hallDtoFactory.createHallDto(hall);
 	}
 
 	@Override
@@ -91,6 +97,15 @@ public class HallServiceImpl implements HallService{
 					String.format("Холл с именем \"%s\" уже есть в этом кинотеатре")); 
 		});
 		return false;
+	}
+	
+	private List<PlaceEntity> generatePlaceByHall(HallEntity hall){
+		List<PlaceEntity> places = new ArrayList<>();
+		for(int i=1; i<=hall.getCountPlace(); i++) {
+			places.add(new PlaceEntity(hall, i));
+		}
+		hall.setPlaces(places);
+		return places;
 	}
 
 }

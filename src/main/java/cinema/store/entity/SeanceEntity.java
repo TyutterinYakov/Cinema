@@ -1,6 +1,8 @@
 package cinema.store.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +28,8 @@ public class SeanceEntity {
 	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
 	private FilmEntity film;
 	private Double price;
+	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
+	private List<SeancePlace> seancePlaces = new ArrayList<>();
 	
 	public SeanceEntity() {
 		super();
@@ -73,6 +78,13 @@ public class SeanceEntity {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	public List<SeancePlace> getSeancePlaces() {
+		return seancePlaces;
+	}
+	public void setSeancePlaces(List<SeancePlace> seancePlaces) {
+		this.seancePlaces = seancePlaces;
+	}
+	
 	
 	
 	
