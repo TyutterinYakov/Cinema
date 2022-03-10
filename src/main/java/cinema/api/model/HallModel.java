@@ -1,9 +1,14 @@
 package cinema.api.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class HallModel {
 
+	@Size(min=2, max=10)
 	private String name;
-	private int countPlace;
+	@NotNull
+	private Integer countPlace;
 	
 	public String getName() {
 		return name;
@@ -11,10 +16,10 @@ public class HallModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getCountPlace() {
+	public Integer getCountPlace() {
 		return countPlace;
 	}
-	public void setCountPlace(int countPlace) {
+	public void setCountPlace(Integer countPlace) {
 		this.countPlace = countPlace;
 	}
 	

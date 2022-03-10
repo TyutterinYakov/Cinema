@@ -15,7 +15,7 @@ public class FilmModel {
 	@Size(min = 5, max = 200)
 	private String director;
 	@NotNull
-	private double duration;
+	private Double duration;
 	@NotNull
 	private Long[] categories;
 	

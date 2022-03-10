@@ -28,7 +28,7 @@ public class SeanceEntity {
 	@ManyToOne(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
 	private FilmEntity film;
 	private Double price;
-	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, mappedBy="seance")
 	private List<SeancePlace> seancePlaces = new ArrayList<>();
 	
 	public SeanceEntity() {

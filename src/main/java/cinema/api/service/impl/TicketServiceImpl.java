@@ -1,6 +1,7 @@
 package cinema.api.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -51,19 +52,23 @@ public class TicketServiceImpl implements TicketService{
 
 	@Override
 	public List<TicketDto> createNewTickets(Long seanceId, Long[] places) {
-		SeanceEntity seance = seanceDao
-				.findBySeanceIdAndStartedAtAfter(seanceId, LocalDateTime.now()).orElseThrow(()->
-						new NotFoundException(
-								String.format(
-										"Сеанс уже начался или его не существует \"%s\" ", 
-										seanceId)));
-		Arrays.stream(places).map(this::findSeancePlaceByIdAndReserved).collect(Collectors.toList());
+		seanceDao
+			.findBySeanceIdAndStartedAtAfter(seanceId, LocalDateTime.now()).orElseThrow(()->
+					new NotFoundException(
+							String.format(
+									"Сеанс уже начался или его не существует \"%s\" ", 
+									seanceId)));
 		String numClient = UUID.randomUUID().toString().substring(0, 8);
-		List<SeancePlace> tickets = Arrays
-									.stream(places)
-									.map(this::findSeancePlaceByIdAndReserved)
-									.collect(Collectors.toList());
-		clientDao.save(new ClientEntity(numClient, tickets));
+		ClientEntity client = clientDao.saveAndFlush(new ClientEntity(numClient));
+		List<SeancePlace> tickets = new ArrayList<>();
+		Arrays
+			.stream(places)
+			.map(this::findSeancePlaceByIdAndReserved)
+			.forEach((t)->{
+				t.setClient(client);
+				t.setReserved(true);
+				tickets.add(seancePlaceDao.saveAndFlush(t));
+			});
 		return ticketDtoFactory.createListTicketDto(tickets);
 	}
 

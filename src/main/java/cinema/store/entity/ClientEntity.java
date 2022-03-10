@@ -27,8 +27,12 @@ public class ClientEntity {
 	private List<SeancePlace> tickets = new ArrayList<>();
 	
 	
+	public ClientEntity() {
+	}
+	public ClientEntity(String numClient) {
+		this.numClient = numClient;
+	}
 	public ClientEntity(String numClient, List<SeancePlace> tickets) {
-		super();
 		this.numClient = numClient;
 		this.tickets = tickets;
 	}

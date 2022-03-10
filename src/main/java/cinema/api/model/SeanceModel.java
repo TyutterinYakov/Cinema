@@ -2,11 +2,16 @@ package cinema.api.model;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotNull;
+
 public class SeanceModel {
 
+	@NotNull
 	private LocalDateTime startedAt;
+	@NotNull
 	private Long filmId;
-	private double price;
+	@NotNull
+	private Double price;
 	
 	public LocalDateTime getStartedAt() {
 		return startedAt;
@@ -20,10 +25,10 @@ public class SeanceModel {
 	public void setFilmId(Long filmId) {
 		this.filmId = filmId;
 	}
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	

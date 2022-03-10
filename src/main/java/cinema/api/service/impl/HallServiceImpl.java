@@ -19,6 +19,7 @@ import cinema.store.entity.HallEntity;
 import cinema.store.entity.PlaceEntity;
 import cinema.store.repository.CinemaRepository;
 import cinema.store.repository.HallRepository;
+import cinema.store.repository.PlaceRepository;
 
 @Service
 public class HallServiceImpl implements HallService{
@@ -26,13 +27,16 @@ public class HallServiceImpl implements HallService{
 	private final HallRepository hallDao;
 	private final CinemaRepository cinemaDao;
 	private final HallDtoFactory hallDtoFactory;
+	private final PlaceRepository placeDao;
 	
 	@Autowired
-	public HallServiceImpl(HallRepository hallDao, CinemaRepository cinemaDao, HallDtoFactory hallDtoFactory) {
+	public HallServiceImpl(HallRepository hallDao, CinemaRepository cinemaDao, HallDtoFactory hallDtoFactory,
+			PlaceRepository placeDao) {
 		super();
 		this.hallDao = hallDao;
 		this.cinemaDao = cinemaDao;
 		this.hallDtoFactory = hallDtoFactory;
+		this.placeDao = placeDao;
 	}
 
 	@Override
@@ -51,7 +55,7 @@ public class HallServiceImpl implements HallService{
 						model.getName(), 
 						model.getCountPlace(), 
 						cinema));
-		hall.setPlaces(generatePlaceByHall(hall));
+		generatePlaceByHall(hall);
 		return hallDtoFactory.createHallDto(hall);
 	}
 
@@ -63,7 +67,7 @@ public class HallServiceImpl implements HallService{
 						String.format("Холл с идентификатором \"%s\" не найден", hallId)));
 		if(hall.getCountPlace()!=model.getCountPlace()) {
 			hall.setCountPlace(model.getCountPlace());
-			hall.setPlaces(generatePlaceByHall(hall));
+			generatePlaceByHall(hall);
 		}
 		if(!model.getName().equalsIgnoreCase(hall.getName())) {
 			if(!findHallByCinemaAndNameIsPresentThrow(hall.getCinema(), model.getName())) {
@@ -94,18 +98,15 @@ public class HallServiceImpl implements HallService{
 	private boolean findHallByCinemaAndNameIsPresentThrow(CinemaEntity cinema, String name) {
 		hallDao.findByCinemaAndNameIgnoreCase(cinema, name).ifPresent((h)->{
 			throw new BadRequestException(
-					String.format("Холл с именем \"%s\" уже есть в этом кинотеатре")); 
+					String.format("Холл с именем \"%s\" уже есть в этом кинотеатре", name)); 
 		});
 		return false;
 	}
 	
-	private List<PlaceEntity> generatePlaceByHall(HallEntity hall){
-		List<PlaceEntity> places = new ArrayList<>();
+	private void generatePlaceByHall(HallEntity hall){
 		for(int i=1; i<=hall.getCountPlace(); i++) {
-			places.add(new PlaceEntity(hall, i));
+			placeDao.save(new PlaceEntity(hall, i));
 		}
-		hall.setPlaces(places);
-		return places;
 	}
 
 }

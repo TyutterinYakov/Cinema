@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cinema.api.dto.SeanceDto;
@@ -17,6 +18,7 @@ import cinema.store.entity.SeanceEntity;
 import cinema.store.entity.SeancePlace;
 import cinema.store.repository.FilmRepository;
 import cinema.store.repository.HallRepository;
+import cinema.store.repository.SeancePlaceRepository;
 import cinema.store.repository.SeanceRepository;
 
 @Service
@@ -26,14 +28,17 @@ public class SeanceServiceImpl implements SeanceService {
 	private final SeanceRepository seanceDao;
 	private final FilmRepository filmDao;
 	private final HallRepository hallDao;
+	private final SeancePlaceRepository seancePlaceDao;
 	
+	@Autowired
 	public SeanceServiceImpl(SeanceDtoFactory seanceDtoFactory, SeanceRepository seanceDao, FilmRepository filmDao,
-			HallRepository hallDao) {
+			HallRepository hallDao, SeancePlaceRepository seancePlaceDao) {
 		super();
 		this.seanceDtoFactory = seanceDtoFactory;
 		this.seanceDao = seanceDao;
 		this.filmDao = filmDao;
 		this.hallDao = hallDao;
+		this.seancePlaceDao = seancePlaceDao;
 	}
 
 	@Override
@@ -50,9 +55,11 @@ public class SeanceServiceImpl implements SeanceService {
 									hall, 
 									film,
 									model.getPrice()));
-		seance.setSeancePlaces(hall.getPlaces().stream().map((p)->{
+		hall.getPlaces().stream().map((p)->{
 									return new SeancePlace(seance, p);
-								}).collect(Collectors.toList()));
+								}).forEach((sp)->{
+									seancePlaceDao.save(sp);
+								});
 		return seanceDtoFactory.createSeanceDto(seance);
 	}
 
