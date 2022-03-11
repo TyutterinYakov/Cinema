@@ -36,11 +36,10 @@ public class FilmEntity {
 	public FilmEntity() {
 		super();
 	}
-	public FilmEntity(String title, String descrition, String image, String director, double duration) {
+	public FilmEntity(String title, String descrition, String director, double duration) {
 		super();
 		this.title = title;
 		this.descrition = descrition;
-		this.image = image;
 		this.director = director;
 		this.duration = duration;
 	}

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -45,9 +46,9 @@ public class FilmController {
 		return ResponseEntity.ok(filmService.getFilmsByCategory(categoryId));
 	}
 	
-	@PostMapping(ADD_FILM_IN_THE_CATEGORIES)
+	@PostMapping(path=ADD_FILM_IN_THE_CATEGORIES, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FilmDto> addFilmInTheCategory(
-			@Valid @RequestBody FilmModel model, BindingResult result){
+			@Valid FilmModel model, BindingResult result){
 		checkError(result);
 		return new ResponseEntity<>(
 				filmService.addFilmInTheCategories(model), 
